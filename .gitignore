@@ -1,0 +1,4 @@
+__pycache__/
+*.db
+demo_auth.log
+.pytest_cache/

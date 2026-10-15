@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><title>CyberWatch</title>
+<meta http-equiv="refresh" content="3">
+<style>
+body{font-family:system-ui,sans-serif;background:#0f172a;color:#e2e8f0;margin:0;padding:20px}
+h1{color:#38bdf8;margin-top:0}
+.box{background:#1e293b;border-radius:10px;padding:16px;margin-bottom:16px}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;padding:8px;border-bottom:1px solid #334155}
+.critical{color:#f87171;font-weight:700}
+.high{color:#fb923c;font-weight:700}
+.empty{color:#94a3b8}
+.badge{background:#334155;padding:3px 10px;border-radius:10px;font-size:13px}
+</style></head><body>
+<h1>🛡️ CyberWatch</h1>
+<div class="box">
+  <b>Alertes totales :</b> <span class="badge">{{ total }}</span>
+  &nbsp; <b>IP la plus suspecte :</b>
+  {% if top_ip %}<span class="badge">{{ top_ip[0] }} ({{ top_ip[1] }} échecs)</span>
+  {% else %}<span class="empty">aucune</span>{% endif %}
+</div>
+<div class="box">
+  <h3>Dernières alertes</h3>
+  <table>
+    <thead><tr><th>Heure</th><th>Sévérité</th><th>Type</th><th>Message</th><th>MITRE ATT&amp;CK</th></tr></thead>
+    <tbody>
+    {% for a in alerts %}
+      <tr>
+        <td>{{ a.time }}</td>
+        <td class="{{ a.severity }}">{{ a.severity }}</td>
+        <td>{{ a.type }}</td>
+        <td>{{ a.message }}</td>
+        <td>{{ a.mitre }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  {% if not alerts %}<p class="empty">Aucune alerte pour le moment. Lancez simulate_attack.py pour tester.</p>{% endif %}
+</div>
+<p class="empty">Page actualisée automatiquement toutes les 3 secondes.</p>
+</body></html>
